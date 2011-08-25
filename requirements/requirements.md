@@ -15,9 +15,9 @@ Definition
 	  
 Shell
 
-	sbt> protobuf:version
+	sbt> show protobuf:version
 	
 Code
 
-	key in protobufConfig
+	version in protobufConfig
 

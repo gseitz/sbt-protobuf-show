@@ -6,7 +6,13 @@
 a quick walk through
 
 &nbsp;  
+
 [gseitz/sbt-protobuf](http://github.com/gseitz/sbt-protobuf) on github
+
+&nbsp;  
+&nbsp;  
+
+<sup>(c) 2011 - Gerolf Seitz</sup>
 
 !SLIDE
 
@@ -42,11 +48,11 @@ Convert these 15 lines...
 
 !SLIDE
 
-## Use youre favourite build tool!
+## Use our favourite build tool!
 
 !SLIDE
 
-# SBT 
+# SBT 0.10.x
 
 Simple Build Tool  
 &nbsp;  

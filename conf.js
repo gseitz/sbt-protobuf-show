@@ -4,6 +4,7 @@
     "hello",
     "requirements",
     "settings",
-    "tasks"
+    "tasks",
+	"goodbye"
   ]
 }

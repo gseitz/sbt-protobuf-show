@@ -10,7 +10,12 @@
 !SLIDE
 
 ## Reuse, Reuse, Reuse
+
+sbt.Keys
+
+
 ```scala
+
 val sourceDirectory	: sbt.SettingKey[java.io.File]
 
 val javaSource 		: sbt.SettingKey[java.io.File]
@@ -53,7 +58,7 @@ version in protobufConfig := "2.4.1"
 
 ## Include Path
 ```scala
-val includePaths = TaskKey[Seq[File]]("include-paths")
+val includePaths = SettingKey[Seq[File]]("include-paths")
 ```	
 	
 
@@ -74,7 +79,7 @@ includePaths in protobufConfig <<=
 object ProtobufPlugin extends Plugin {
   val protobufConfig = config("protobuf")
 
-  val includePaths = TaskKey[Seq[File]]("include-paths")
+  val includePaths = SettingKey[Seq[File]]("include-paths")
 
   lazy val protobufSettings: Seq[Setting[_]] = inConfig(protobufConfig)(Seq(
     sourceDirectory <<= (sourceDirectory in Compile) { _ / "protobuf" },
@@ -82,7 +87,8 @@ object ProtobufPlugin extends Plugin {
     version := "2.4.1",
     includePaths <<= sourceDirectory map (identity(_) :: Nil)
   )) ++ Seq(
-    libraryDependencies <+= (version in protobufConfig)("com.google.protobuf" % "protobuf-java" % _),
+    libraryDependencies <+= 
+		(version in protobufConfig)("com.google.protobuf" % "protobuf-java" % _)
   )
 }
 ```
