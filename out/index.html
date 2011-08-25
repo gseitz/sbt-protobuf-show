@@ -7,7 +7,7 @@
         <script type="text/javascript" src="assets/js/jquery.min.js"></script>
         <script type="text/javascript" src="assets/js/show.js"></script>
         <script type="text/javascript" src="assets/js/prettify/prettify.js"></script>
-        <script type="text/javascript" src="assets/js/prettify/lang-apollo.js"></script><script type="text/javascript" src="assets/js/prettify/lang-css.js"></script><script type="text/javascript" src="assets/js/prettify/lang-hs.js"></script><script type="text/javascript" src="assets/js/prettify/lang-lisp.js"></script><script type="text/javascript" src="assets/js/prettify/lang-lua.js"></script><script type="text/javascript" src="assets/js/prettify/lang-ml.js"></script><script type="text/javascript" src="assets/js/prettify/lang-proto.js"></script><script type="text/javascript" src="assets/js/prettify/lang-scala.js"></script><script type="text/javascript" src="assets/js/prettify/lang-sql.js"></script><script type="text/javascript" src="assets/js/prettify/lang-sql.js"></script><script type="text/javascript" src="assets/js/prettify/lang-vb.js"></script><script type="text/javascript" src="assets/js/prettify/lang-vhdl.js"></script><script type="text/javascript" src="assets/js/prettify/lang-wiki.js"></script><script type="text/javascript" src="assets/js/prettify/lang-yaml.js"></script><link href="css/custom.css?1314230246354" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="assets/js/prettify/lang-apollo.js"></script><script type="text/javascript" src="assets/js/prettify/lang-css.js"></script><script type="text/javascript" src="assets/js/prettify/lang-hs.js"></script><script type="text/javascript" src="assets/js/prettify/lang-lisp.js"></script><script type="text/javascript" src="assets/js/prettify/lang-lua.js"></script><script type="text/javascript" src="assets/js/prettify/lang-ml.js"></script><script type="text/javascript" src="assets/js/prettify/lang-proto.js"></script><script type="text/javascript" src="assets/js/prettify/lang-scala.js"></script><script type="text/javascript" src="assets/js/prettify/lang-sql.js"></script><script type="text/javascript" src="assets/js/prettify/lang-sql.js"></script><script type="text/javascript" src="assets/js/prettify/lang-vb.js"></script><script type="text/javascript" src="assets/js/prettify/lang-vhdl.js"></script><script type="text/javascript" src="assets/js/prettify/lang-wiki.js"></script><script type="text/javascript" src="assets/js/prettify/lang-yaml.js"></script><link href="css/custom.css?1314291049291" type="text/css" rel="stylesheet" />
       <script type="text/javascript"><!--
         window.onload=function() { prettyPrint(); };
       --></script>
@@ -21,7 +21,12 @@
 </p><p>&nbsp;  
 <br/>
 <a href="http://github.com/gseitz/sbt-protobuf" >gseitz/sbt-protobuf</a> on github
-</p></div>
+</p>&nbsp;  
+<br/>
+&nbsp;  
+<br/>
+<sup>(c) 2011 - Gerolf Seitz</sup>
+</div>
       </div><div class="content" id="slide-1">
        <div class="container"><p>Convert these 15 lines...
 </p><pre><code class="prettyprint lang-protobuf">	package contacts;
@@ -47,9 +52,9 @@
       </div><div class="content" id="slide-3">
        <div class="container"><h2>&gt;&gt;NO&lt;&lt; manual labor please!</h2></div>
       </div><div class="content" id="slide-4">
-       <div class="container"><h2>Use youre favourite build tool!</h2></div>
+       <div class="container"><h2>Use our favourite build tool!</h2></div>
       </div><div class="content" id="slide-5">
-       <div class="container"><h1>SBT</h1><p>Simple Build Tool  
+       <div class="container"><h1>SBT 0.10.x</h1><p>Simple Build Tool  
 <br/>
 &nbsp;  
 <br/>
@@ -65,10 +70,10 @@
 </p><pre><code>val protobufConfig = config(&quot;protobuf&quot;)
   
 </code></pre><p>Shell
-</p><pre><code>sbt&gt; protobuf:version
+</p><pre><code>sbt&gt; show protobuf:version
 
 </code></pre><p>Code
-</p><pre><code>key in protobufConfig
+</p><pre><code>version in protobufConfig
 </code></pre></div>
       </div><div class="content" id="slide-8">
        <div class="container"><h2>Settings</h2><ul><li>Path for source *.proto
@@ -77,7 +82,9 @@
 </li><li>Path for additional *.proto
 </li></ul></div>
       </div><div class="content" id="slide-9">
-       <div class="container"><h2>Reuse, Reuse, Reuse</h2><pre><code class="prettyprint lang-scala">val sourceDirectory	: sbt.SettingKey[java.io.File]
+       <div class="container"><h2>Reuse, Reuse, Reuse</h2><p>sbt.Keys
+</p><pre><code class="prettyprint lang-scala">
+val sourceDirectory	: sbt.SettingKey[java.io.File]
 
 val javaSource 		: sbt.SettingKey[java.io.File]
 
@@ -101,7 +108,7 @@ val version 		: sbt.SettingKey[String]
        <div class="container"><h2>Version</h2><pre><code class="prettyprint lang-scala">version in protobufConfig := &quot;2.4.1&quot;
 </code></pre></div>
       </div><div class="content" id="slide-13">
-       <div class="container"><h2>Include Path</h2><pre><code class="prettyprint lang-scala">val includePaths = TaskKey[Seq[File]](&quot;include-paths&quot;)
+       <div class="container"><h2>Include Path</h2><pre><code class="prettyprint lang-scala">val includePaths = SettingKey[Seq[File]](&quot;include-paths&quot;)
 </code></pre><pre><code>
 </code></pre><p>Add our proto source directory by default:
 </p><pre><code class="prettyprint lang-scala">
@@ -113,7 +120,7 @@ includePaths in protobufConfig &lt;&lt;=
        <div class="container"><h1>What we have so far</h1><pre><code class="prettyprint lang-scala">object ProtobufPlugin extends Plugin {
   val protobufConfig = config(&quot;protobuf&quot;)
 
-  val includePaths = TaskKey[Seq[File]](&quot;include-paths&quot;)
+  val includePaths = SettingKey[Seq[File]](&quot;include-paths&quot;)
 
   lazy val protobufSettings: Seq[Setting[_]] = inConfig(protobufConfig)(Seq(
     sourceDirectory &lt;&lt;= (sourceDirectory in Compile) { _ / &quot;protobuf&quot; },
@@ -121,7 +128,8 @@ includePaths in protobufConfig &lt;&lt;=
     version := &quot;2.4.1&quot;,
     includePaths &lt;&lt;= sourceDirectory map (identity(_) :: Nil)
   )) ++ Seq(
-    libraryDependencies &lt;+= (version in protobufConfig)(&quot;com.google.protobuf&quot; % &quot;protobuf-java&quot; % _),
+    libraryDependencies &lt;+= 
+		(version in protobufConfig)(&quot;com.google.protobuf&quot; % &quot;protobuf-java&quot; % _)
   )
 }
 </code></pre></div>
@@ -130,10 +138,10 @@ includePaths in protobufConfig &lt;&lt;=
 </li><li>Clean generated java source
 </li></ul></div>
       </div><div class="content" id="slide-16">
-       <div class="container"><h1>Generate Java source files</h1><p>Declaration
+       <div class="container"><h1>Generate Java source files #1</h1><p>Declaration
 </p><pre><code class="prettyprint lang-scala">val generate = TaskKey[Seq[File]](&quot;generate&quot;)
 
-generate in protobufConfig &lt;&lt;= sourceGeneratorTask
+generate in protobufConfig &lt;&lt;= sourceGeneratorTask()
 </code></pre><p>&nbsp;  
 <br/>
 Register as source generator
@@ -152,24 +160,47 @@ Register as source generator
 </code></pre></div>
       </div><div class="content" id="slide-18">
        <div class="container"><h1>Generate Java source files #3</h1><pre><code class="prettyprint lang-scala">(out, srcDir, targetDir, includePaths, cache) =&gt;
+
   val cachedCompile = FileFunction.cached(cache / &quot;protobuf&quot;,
                                           inStyle = FilesInfo.lastModified,
                                           outStyle = FilesInfo.exists) { 
+										  
     (in: Set[File]) =&gt; compile(srcDir, targetDir, includePaths, out.log)
   }
   cachedCompile((srcDir ** &quot;*.proto&quot;).get.toSet).toSeq
 </code></pre></div>
       </div><div class="content" id="slide-19">
+       <div class="container"><h1>Generate Java source files #4</h1><pre><code class="prettyprint lang-scala">def compile(srcDir: File, target: File, includePaths: Seq[File], log: Logger) =  {
+
+  val schemas = (srcDir ** &quot;*.proto&quot;).get
+  val incPath = includePaths.map(_.absolutePath).mkString(&quot;-I&quot;, &quot; -I&quot;, &quot;&quot;)
+
+  &lt;x&gt;protoc {incPath} --java_out={target.absolutePath} {schemas.map(_.absolutePath).mkString(&quot; &quot;)}&lt;/x&gt; ! log
+  
+  (target ** &quot;*.java&quot;).get.toSet
+}
+</code></pre></div>
+      </div><div class="content" id="slide-20">
        <div class="container"><h1>Clean up</h1><p>No need to create a clean task.
 </p><pre><code class="prettyprint lang-scala">
 cleanFiles &lt;+= (javaSource in protobufConfig).identity,
 
 </code></pre><p>&nbsp;  
 <br/>
-<em>WARNING:</em> Don't set it to <code>src/main/java</code> if you value its content!</p></div>
+<em>WARNING:</em> Don't set it to <code>src/main/java</code> if you value its content!
+</p></div>
+      </div><div class="content" id="slide-21">
+       <div class="container"><h1>That's it!</h1>&nbsp;  
+&nbsp;  
+<h2>Any questions?</h2></div>
+      </div><div class="content" id="slide-22">
+       <div class="container"><h1>Thanks</h1>&nbsp;  
+&nbsp;  
+&nbsp;  
+<p>Now go and convert your builds to sbt-0.10.x ;)</p></div>
       </div>
           </div>
         </div>
-        <script type="text/javascript" src="js/custom.js?1314230246653"></script>
+        <script type="text/javascript" src="js/custom.js?1314291049463"></script>
       </body>
     </html>
